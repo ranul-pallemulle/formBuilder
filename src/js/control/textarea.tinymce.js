@@ -21,7 +21,7 @@ export default class controlTinymce extends controlTextarea {
    * configure the tinymce editor requirements
    */
   configure() {
-    this.js = ['https://cdn.tinymce.com/4/tinymce.min.js']
+    this.js = ['assets/js/tinymce/tinymce.min.js']
 
     // additional javascript config
     if (this.classConfig.js) {
@@ -40,15 +40,14 @@ export default class controlTinymce extends controlTextarea {
 
     // configure the tinyMCE editor defaults
     this.editorOptions = {
-      height: 250,
-      paste_data_images: true,
       plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
+        'advlist autolink lists link charmap anchor',
         'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table contextmenu paste code',
+        'insertdatetime print table paste code autoresize',
       ],
       toolbar:
-        'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | table',
+      'undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | table',
+      elementpath: false
     }
   }
 
@@ -79,6 +78,8 @@ export default class controlTinymce extends controlTextarea {
     const options = jQuery.extend(this.editorOptions, this.classConfig)
     options.target = this.field
     // initialise the editor
+    window.tinymce.suffix = '.min';
+    window.tinymce.baseURL = '/formsui/assets/js/tinymce';
     window.tinymce.init(options)
 
     // Set userData
@@ -89,4 +90,4 @@ export default class controlTinymce extends controlTextarea {
 }
 
 // register tinymce as a richtext control
-controlTextarea.register('tinymce', controlTinymce, 'textarea')
+controlTextarea.register('Rich Text Area', controlTinymce, 'textarea')
